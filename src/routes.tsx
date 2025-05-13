@@ -1,6 +1,6 @@
 import RootLayout from "./Components/RootLayout";
 import ProjectsPage from "./Pages/ProjectsPages";
-
+import VolunteersPage from "./Pages/VolunteersPage";
 
 import{
 
@@ -23,9 +23,15 @@ const projectsRoute = createRoute({
     component: ProjectsPage,
 }); 
 
+const volunteersRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: "/volunteers",
+    component: VolunteersPage,
+}); 
 
 rootRoute.addChildren([
     projectsRoute,
+    volunteersRoute
 ]);
 
 
@@ -34,6 +40,7 @@ const router = createRouter({
     history: createBrowserHistory(),
     defaultErrorComponent: () => <div>Something went wrong</div>,
 });
+
 
 export default router;
 

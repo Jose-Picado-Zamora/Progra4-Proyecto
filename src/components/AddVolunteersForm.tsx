@@ -1,40 +1,42 @@
-
 import { useForm } from '@tanstack/react-form'
-import { useAddProject } from '../Services/ProjectsService'
+import { useAddVolunteers } from '../Services/VolunteersService'
 
-type AddProjectsFormProps = { onClose: () => void }
+type AddVolunteerFormProps = { onClose: () => void; };
 
-const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
-
-  // 1) grab your mutation
+const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
+    
+// 1) grab your mutation
   const {
-    mutate: addProject,
+    mutate: addVolunteer,
     isPending:
     isAdding,
     isError,
     error,
     isSuccess,
-  } = useAddProject()
+  } = useAddVolunteers()
 
   // 1️⃣ Initialize form state with defaultValues and a submit handler
   const form = useForm({
     defaultValues: {
       id: '',
       name: '',
+      phone: '',
       email: '',
-      ubicacion: '',
-      solicitudProyecto: '',
+      address: '',
+      rol: '',
     },
     // 3) when the user submits, call your mutation
     onSubmit: async ({ value }) => {
-      addProject({
+      addVolunteer({
         ...value,
-        id: Number(value.id), // aquí haces la conversión a number
+        id: Number(value.id), // trasforma de string a number
       });
-      form.reset()
+      form.reset();
       onClose();
     },
   })
+
+  
 
   return (
     <form
@@ -58,7 +60,8 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className= "border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              
             />
           )}
         </form.Field>
@@ -74,6 +77,25 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
             <input
               id="name"
               name="name"
+              value={field.state.value}
+              onChange={e => field.handleChange(e.target.value)}
+              onBlur={field.handleBlur}
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          )}
+        </form.Field>
+      </div>
+
+      {/* ─── Name Field ─────────────────────── */}
+      <div className="flex flex-col">
+        <label htmlFor="phone" className="mb-1 text-gray-700 font-medium">
+          Phone:
+        </label>
+        <form.Field name="phone">
+          {field => (
+            <input
+              id="phone"
+              name="phone"
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
@@ -103,16 +125,16 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         </form.Field>
       </div>
 
-      {/* ─── Ubicacion Field ─────────────────────── */}
+      {/* ─── Address Field ─────────────────────── */}
       <div className="flex flex-col">
-        <label htmlFor="ubicacion" className="mb-1 text-gray-700 font-medium">
-          Ubicacion:
+        <label htmlFor="address" className="mb-1 text-gray-700 font-medium">
+          Address:
         </label>
-        <form.Field name="ubicacion">
+        <form.Field name="address">
           {field => (
             <input
-              id="ubicacion"
-              name="ubicacion"
+              id="address"
+              name="address"
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
@@ -122,16 +144,16 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         </form.Field>
       </div>
 
-      {/* ─── Solicitud Proyecto ─────────────────────── */}
+      {/* ─── Rol Field ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="solicitud" className="mb-1 text-gray-700 font-medium">
-          Solicitud:
+          Rol:
         </label>
-        <form.Field name="solicitudProyecto">
+        <form.Field name="rol">
           {field => (
             <input
-              id="solicitud"
-              name="solicitudProyecto"
+              id="rol"
+              name="rol"
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
@@ -163,4 +185,4 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
   )
 }
 
-export default AddProjectForm;
+export default AddVolunteerForm
