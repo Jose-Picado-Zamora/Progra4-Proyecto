@@ -2,7 +2,7 @@ import Navbar from "./Components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Ferias from "./Pages/Ferias";
 import ProjectsPage from "./Pages/ProjectsPages";
-import Donadores from "./Pages/Donadores";
+import Donors from "./Pages/Donors";
 import './App.css'
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/ferias" element={<Ferias />} />
           <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/donadores" element={<Donadores />} />
+          <Route path="/donors" element={<Donors />} />
         </Routes>
       </div>
     </>

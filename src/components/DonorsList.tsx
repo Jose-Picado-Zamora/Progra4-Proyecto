@@ -1,14 +1,13 @@
 import { getCoreRowModel, useReactTable, flexRender, ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
-import { useDonadores } from "../Services/DonadoresService";
+import { useDonors } from "../Services/DonorsService";
 
-const DonadoresList = () => {
-  const { data, isLoading, isError, error } = useDonadores();
+const DonorsList = () => {
+  const { data, isLoading, isError, error } = useDonors();
 
-  // memorizar data
-  const donadores = useMemo(() => data ?? [], [data]);
+  const donors = useMemo(() => data ?? [], [data]);
 
-  type Donador = {
+  type Donor = {
     id: number;
     name: string;
     email: string;
@@ -17,7 +16,7 @@ const DonadoresList = () => {
     details: string;
   };
 
-  const columns: ColumnDef<Donador>[] = useMemo(() => [
+  const columns: ColumnDef<Donor>[] = useMemo(() => [
     { header: 'ID', accessorKey: 'id' },
     { header: 'Name', accessorKey: 'name' },
     { header: 'Email', accessorKey: 'email' },
@@ -26,8 +25,8 @@ const DonadoresList = () => {
     { header: 'Details', accessorKey: 'details' },
   ], []);
 
-  const table = useReactTable<Donador>({
-    data: donadores,
+  const table = useReactTable<Donor>({
+    data: donors,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -84,4 +83,4 @@ const DonadoresList = () => {
   );
 };
 
-export default DonadoresList;
+export default DonorsList;

@@ -1,16 +1,18 @@
-import DonadoresList from "../Components/DonadoresList";
+import DonorsList from "../Components/DonorsList";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AddDonorsButton from "../Components/AddDonorsButton";
 
-const Donadores = () => {
+const Donors = () => {
   const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="p-4">
-        <DonadoresList />
+        <AddDonorsButton />
+        <DonorsList />
       </div>
     </QueryClientProvider>
   );
 };
 
-export default Donadores;
+export default Donors;
