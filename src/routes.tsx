@@ -1,6 +1,6 @@
 import RootLayout from "./Components/RootLayout";
 import ProjectsPage from "./Pages/ProjectsPages";
-
+import DonadoresPage from "./Pages/Donadores";
 
 import{
 
@@ -23,9 +23,15 @@ const projectsRoute = createRoute({
     component: ProjectsPage,
 }); 
 
+const donadoresRoute = createRoute({ 
+  getParentRoute: () => rootRoute,
+  path: "/donadores",
+  component: DonadoresPage,
+});
 
 rootRoute.addChildren([
     projectsRoute,
+    donadoresRoute
 ]);
 
 
