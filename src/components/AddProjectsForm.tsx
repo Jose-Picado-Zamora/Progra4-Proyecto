@@ -2,7 +2,9 @@
 import { useForm } from '@tanstack/react-form'
 import { useAddProject } from '../Services/ProjectsService'
 
-const AddProjectForm = () => {
+type AddProjectsFormProps = { onClose: () => void }
+
+const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
 
   // 1) grab your mutation
   const {
@@ -29,6 +31,8 @@ const AddProjectForm = () => {
         ...value,
         id: Number(value.id), // aquí haces la conversión a number
       });
+      form.reset()
+      onClose();
     },
   })
 
@@ -54,7 +58,7 @@ const AddProjectForm = () => {
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -73,7 +77,7 @@ const AddProjectForm = () => {
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -93,7 +97,7 @@ const AddProjectForm = () => {
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -112,7 +116,7 @@ const AddProjectForm = () => {
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -131,7 +135,7 @@ const AddProjectForm = () => {
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -142,7 +146,8 @@ const AddProjectForm = () => {
         <button
           type="submit"
           disabled={!form.state.canSubmit}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          className={` text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50`}
+          style={{ backgroundColor: '#52AC83' }}
         >
           Submit
         </button>

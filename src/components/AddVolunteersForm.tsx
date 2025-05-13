@@ -1,9 +1,7 @@
 import { useForm } from '@tanstack/react-form'
 import { useAddVolunteers } from '../Services/VolunteersService'
 
-type AddVolunteerFormProps = {
-    onClose: () => void;
-};
+type AddVolunteerFormProps = { onClose: () => void; };
 
 const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
     
