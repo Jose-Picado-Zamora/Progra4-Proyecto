@@ -34,7 +34,7 @@ const volunteersRoute = createRoute({
 
 rootRoute.addChildren([
     projectsRoute,
-    donorsRoute
+    donorsRoute,
     volunteersRoute,
 ]);
 
