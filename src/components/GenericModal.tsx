@@ -9,14 +9,14 @@ type GenericModalProps = {
   children: ReactNode;
 };
 
-
 const GenericModal = ({ show, onClose, title, children }: GenericModalProps) => {
 
     if (!show) return null;
 
     return (
       // backdrop
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="fixed inset-0 z-50 flex items-center justify-center"
+      style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
         {/* panel */}
         <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6">
           {/* close button */}
