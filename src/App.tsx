@@ -1,7 +1,8 @@
-import Navbar from "./components/Navbar";
+import Navbar from "./Components/Navbar";
 import { Routes, Route } from "react-router-dom";
-import Ferias from "./pages/Ferias";
-import Donadores from "./pages/Donadores";
+import Ferias from "./Pages/Ferias";
+import ProjectsPage from "./Pages/ProjectsPages";
+import './App.css'
 
 function App() {
   return (
@@ -10,9 +11,7 @@ function App() {
       <div className="pt-16 px-6">
         <Routes>
           <Route path="/ferias" element={<Ferias />} />
-        </Routes>
-        <Routes>
-          <Route path="/donadores" element={<Donadores />} />
+          <Route path="/projects" element={<ProjectsPage />} />
         </Routes>
       </div>
     </>
