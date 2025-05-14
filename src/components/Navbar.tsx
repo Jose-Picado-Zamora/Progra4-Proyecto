@@ -15,7 +15,7 @@ const Navbar = () => {
       <ul className="flex gap-6 text-sm font-medium">
         <li><Link to="/volunteers" className="hover:text-gray-300">Volunteers</Link></li>
         <li><Link to="/projects" className="hover:text-gray-300">Projects</Link></li>
-        <li><Link to="/donadores" className="hover:text-gray-300">Donadores</Link></li>
+        <li><Link to="/donors" className="hover:text-gray-300">Donors</Link></li>
         <li><Link to="/ferias" className="hover:text-gray-300">Ferias</Link></li>
         <li><Link to="/emprendedores" className="hover:text-gray-300">Emprendedores</Link></li>
       </ul>
