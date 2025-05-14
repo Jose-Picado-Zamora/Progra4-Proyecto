@@ -2,6 +2,7 @@ import RootLayout from "./Components/RootLayout";
 import ProjectsPage from "./Pages/ProjectsPages";
 import DonorsPage from "./Pages/Donors";
 import VolunteersPage from "./Pages/VolunteersPage";
+import EntrepreneursPage from "./pages/Entrepreneurs";
 
 import{
 createRootRoute,
@@ -32,10 +33,17 @@ const volunteersRoute = createRoute({
     component: VolunteersPage,
 }); 
 
+const entrepreneursRoute =createRoute({
+    getParentRoute: () => rootRoute,
+    path: "/entrepreneurs",
+    component: EntrepreneursPage,
+});
+
 rootRoute.addChildren([
     projectsRoute,
     donorsRoute,
     volunteersRoute,
+    entrepreneursRoute,
 ]);
 
 const router = createRouter({
