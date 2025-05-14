@@ -1,11 +1,24 @@
 import { getCoreRowModel, useReactTable, flexRender, ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
-import { useEntrepreneurs, Entrepreneur } from "../Services/Entrepreneurs";
+import { useEntrepreneurs } from "../Services/EntrepreneursService";
 
 const EntrepreneursList = () =>{
     const { data, isLoading, isError, error } = useEntrepreneurs();
 
   const entrepreneurs = useMemo(() => data ?? [], [data]);
+
+   type Entrepreneur = {
+    id: number;
+    name: string;
+    businessName: string; 
+    phone: string;
+    email: string;
+    feriaName: string;
+    standNumber: string;
+    productsDescription: string;
+  };
+
+
 
   const columns: ColumnDef<Entrepreneur>[] = useMemo(() => [
     { header: 'ID', accessorKey: 'id' },

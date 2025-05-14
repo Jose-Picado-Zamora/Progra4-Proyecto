@@ -2,7 +2,7 @@ import RootLayout from "./Components/RootLayout";
 import ProjectsPage from "./Pages/ProjectsPages";
 import DonorsPage from "./Pages/Donors";
 import VolunteersPage from "./Pages/VolunteersPage";
-import EntrepreneursPage from "./pages/Entrepreneurs";
+import EntrepreneursPage from "./Pages/Entrepreneurs";
 
 import{
 createRootRoute,
