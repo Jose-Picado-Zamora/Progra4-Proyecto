@@ -22,7 +22,7 @@ const projectsRoute = createRoute({
 
 const donorsRoute = createRoute({ 
   getParentRoute: () => rootRoute,
-  path: "/donadores",
+  path: "/donors",
   component: DonorsPage,
 });
 
