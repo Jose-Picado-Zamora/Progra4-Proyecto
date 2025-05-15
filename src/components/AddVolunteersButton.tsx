@@ -1,5 +1,5 @@
 
-import GenericModal from "../Components/GenericModal";
+import GenericModal from "./GenericModal";
 import AddVolunteersForm from "./AddVolunteersForm";
 import { useState } from "react";
 
