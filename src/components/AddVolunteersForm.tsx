@@ -168,7 +168,7 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
         <button
           type="submit"
           disabled={!form.state.canSubmit}
-          className={` text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50`}
+          className="text-white px-4 py-2 rounded focus:ring-3 focus:ring-emerald-200 disabled:opacity-50"
           style={{ backgroundColor: '#52AC83' }}
         >
           Submit

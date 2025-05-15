@@ -12,8 +12,8 @@ const AddDonorsButton = () => {
         <button
           onClick={() => setShowAddModal(true)}
           className="px-5 py-2.5 text-sm font-medium text-white 
-                  bg-blue-600 rounded-lg hover:bg-blue-700 
-                  focus:outline-none focus:ring-4 focus:ring-blue-300"
+                    rounded-lg focus:ring-3 focus:ring-emerald-200"
+          style={{ backgroundColor: "#52AC83" }} // TPF Green
         >
           Add Donor
         </button>

@@ -75,7 +75,7 @@ const AddDonorsForm = ({ onSuccess }: AddDonorsFormProps) => {
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -94,7 +94,7 @@ const AddDonorsForm = ({ onSuccess }: AddDonorsFormProps) => {
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -114,7 +114,7 @@ const AddDonorsForm = ({ onSuccess }: AddDonorsFormProps) => {
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -133,7 +133,7 @@ const AddDonorsForm = ({ onSuccess }: AddDonorsFormProps) => {
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -155,7 +155,7 @@ const AddDonorsForm = ({ onSuccess }: AddDonorsFormProps) => {
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -174,7 +174,7 @@ const AddDonorsForm = ({ onSuccess }: AddDonorsFormProps) => {
               value={field.state.value}
               onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
@@ -185,7 +185,8 @@ const AddDonorsForm = ({ onSuccess }: AddDonorsFormProps) => {
         <button
           type="submit"
           disabled={!form.state.canSubmit}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          className="bg-blue-600 text-white px-4 py-2 rounded focus:ring-3 focus:ring-emerald-200 disabled:opacity-50"
+          style={{ backgroundColor: "#52AC83" }} // TPF Green
         >
           Submit
         </button>

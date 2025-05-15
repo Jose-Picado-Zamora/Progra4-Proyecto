@@ -11,10 +11,10 @@ const AddFairButton = () => {
         <button
           onClick={() => setOpen(true)}
           className="px-5 py-2.5 text-sm font-medium text-white 
-                     rounded-lg focus:outline-none focus:ring-4 focus:ring-emerald-300"
+                     rounded-lg focus:outline-none focus:ring-3 focus:ring-emerald-200"
           style={{ backgroundColor: "#52AC83" }} 
         >
-          Add Fair
+          Submit
         </button>
       </div>
 
