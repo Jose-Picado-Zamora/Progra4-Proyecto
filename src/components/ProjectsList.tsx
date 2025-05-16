@@ -10,7 +10,7 @@ const ProjectsList = () => {
     const { data, isLoading, isError, error } = useProjects();
 
 
-    //memorizar data
+    //se memoriza la informacion  
     const projects = useMemo(() => data ?? [], [data]);
 
     type Project = {

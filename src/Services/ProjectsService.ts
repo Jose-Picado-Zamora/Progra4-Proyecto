@@ -12,7 +12,7 @@ const fetchProjects = async () => {
         'X-Access-Key': API_KEY,
       }
     });
-    return response.data.record.projects;  // assumes response.data has the shape { id, record, metadata }
+    return response.data.record.projects;  // se retorna la informacion de la api de project
   }
   catch (error) {
     console.error('Error fetching projects:', error);
@@ -63,7 +63,7 @@ export async function postProjects(newProject: Project) {
 export function useAddProject() {
   const queryClient = useQueryClient()
 
-  // **Optimistic update**: before the request fires
+  
   return useMutation({
     mutationFn: postProjects,
     onMutate: async (newProject) => {
