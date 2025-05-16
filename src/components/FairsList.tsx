@@ -22,6 +22,7 @@ const FairsList = () => {
     { header: "Organizer", accessorKey: "organizer" },
     { header: "Details", accessorKey: "details" },
     { header: "Audience", accessorKey: "audience" },
+    { header: "Stands", accessorKey: "stands" },
   ], []);
 
   const table = useReactTable<Fair>({
@@ -44,7 +45,9 @@ const FairsList = () => {
                 {headerGroup.headers.map(header => (
                   <th
                     key={header.id}
-                    className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className={`px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider ${
+                      header.column.id === "stands" ? "text-center" : "text-left"
+                    }`}
                   >
                     {flexRender(header.column.columnDef.header, header.getContext())}
                   </th>
@@ -58,7 +61,9 @@ const FairsList = () => {
                 {row.getVisibleCells().map(cell => (
                   <td
                     key={cell.id}
-                    className="px-4 py-2 text-sm text-gray-700 break-words max-w-[160px] align-top"
+                    className={`px-4 py-2 text-sm text-gray-700 break-words max-w-[160px] align-top ${
+                      cell.column.id === "stands" ? "text-center" : ""
+                    }`}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>

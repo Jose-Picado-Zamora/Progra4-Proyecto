@@ -10,6 +10,7 @@ export type Fair = {
   organizer: string;
   details: string;
   audience: string;
+  stands: number;
 };
 
 const BIN_ID = "682547508561e97a50141ff4";
