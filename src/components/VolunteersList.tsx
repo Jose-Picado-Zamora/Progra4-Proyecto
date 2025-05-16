@@ -18,6 +18,7 @@ const VolunteersList = () => {
         email: string;
         address: string;
         rol: string;
+        projectName: string;
     }
 
     const columns: ColumnDef<Volunteer>[] = useMemo(() => [
@@ -27,6 +28,7 @@ const VolunteersList = () => {
         { header: 'Email', accessorKey: 'email' },
         { header: 'Address', accessorKey: 'address', },
         { header: 'Rol', accessorKey: 'rol', },
+        { header: 'Project Name', accessorKey: 'projectName' },
     ], []);
 
     const table = useReactTable<Volunteer>({

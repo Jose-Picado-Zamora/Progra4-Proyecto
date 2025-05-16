@@ -54,6 +54,7 @@ const AddEntrepreneurForm = ({ onClose }: AddEntrepreneurFormProps) => {
         <form.Field name="id">
           {field => (
             <input
+              required
               id="id"
               name="id"
               value={field.state.value}
@@ -73,6 +74,7 @@ const AddEntrepreneurForm = ({ onClose }: AddEntrepreneurFormProps) => {
         <form.Field name="name">
           {field => (
             <input
+              required
               id="name"
               name="name"
               value={field.state.value}
@@ -92,6 +94,7 @@ const AddEntrepreneurForm = ({ onClose }: AddEntrepreneurFormProps) => {
         <form.Field name="businessName">
           {field => (
             <input
+              required
               id="businessName"
               name="businessName"
               value={field.state.value}
@@ -111,6 +114,7 @@ const AddEntrepreneurForm = ({ onClose }: AddEntrepreneurFormProps) => {
         <form.Field name="phone">
           {field => (
             <input
+              required
               id="phone"
               name="phone"
               value={field.state.value}
@@ -130,6 +134,7 @@ const AddEntrepreneurForm = ({ onClose }: AddEntrepreneurFormProps) => {
         <form.Field name="email">
           {field => (
             <input
+              required
               id="email"
               name="email"
               type="email"
@@ -150,6 +155,7 @@ const AddEntrepreneurForm = ({ onClose }: AddEntrepreneurFormProps) => {
         <form.Field name="feriaName">
           {field => (
             <input
+              required
               id="feriaName"
               name="feriaName"
               value={field.state.value}
@@ -169,6 +175,7 @@ const AddEntrepreneurForm = ({ onClose }: AddEntrepreneurFormProps) => {
         <form.Field name="standNumber">
           {field => (
             <input
+              required
               id="standNumber"
               name="standNumber"
               value={field.state.value}
@@ -188,6 +195,7 @@ const AddEntrepreneurForm = ({ onClose }: AddEntrepreneurFormProps) => {
         <form.Field name="productsDescription">
           {field => (
             <input
+              required
               id="productsDescription"
               name="productsDescription"
               value={field.state.value}

@@ -53,6 +53,7 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         <form.Field name="id">
           {field => (
             <input
+              required
               id="id"
               name="id"
               value={field.state.value}
@@ -72,6 +73,7 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         <form.Field name="name">
           {field => (
             <input
+              required
               id="name"
               name="name"
               value={field.state.value}
@@ -91,6 +93,7 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         <form.Field name="email">
           {field => (
             <input
+              required
               id="email"
               name="email"
               type="email"
@@ -111,6 +114,7 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         <form.Field name="ubicacion">
           {field => (
             <input
+              required
               id="ubicacion"
               name="ubicacion"
               value={field.state.value}
@@ -130,6 +134,7 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         <form.Field name="solicitudProyecto">
           {field => (
             <input
+              required
               id="solicitud"
               name="solicitudProyecto"
               value={field.state.value}
