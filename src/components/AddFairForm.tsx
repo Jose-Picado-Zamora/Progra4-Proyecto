@@ -17,16 +17,29 @@ const AddFairForm = ({ onSuccess }: Props) => {
     organizer: "",
     details: "",
     audience: "",
+    stands: 0, 
   };
 
   const [form, setForm] = useState(initialForm);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    setForm({
+      ...form,
+      [name]: name === "stands" ? Math.max(0, Number(value)) : value, 
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    
+    if (!form.stands || form.stands <= 0) {
+      alert("La cantidad de stands debe ser mayor a 0.");
+      return;
+    }
+
     addFair(form, { onSuccess });
   };
 
@@ -47,6 +60,7 @@ const AddFairForm = ({ onSuccess }: Props) => {
           >
             {key.charAt(0).toUpperCase() + key.slice(1)}:
           </label>
+
           {key === "details" ? (
             <textarea
               id={key}
@@ -58,10 +72,11 @@ const AddFairForm = ({ onSuccess }: Props) => {
             />
           ) : (
             <input
-              type={key === "date" ? "date" : "text"}
+              type={key === "date" ? "date" : key === "stands" ? "number" : "text"}
               id={key}
               name={key}
               value={value}
+              min={key === "stands" ? 1 : undefined} 
               onChange={handleChange}
               className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               required
@@ -73,7 +88,7 @@ const AddFairForm = ({ onSuccess }: Props) => {
       <div className="flex space-x-4">
         <button
           type="submit"
-          className="text-white px-4 py-2 rounded focus:ring-3 focus:ring-emerald-200 disabled:opacity-50"
+          className="text-white px-4 py-2 rounded hover:bg-opacity-90 disabled:opacity-50"
           style={{ backgroundColor: "#52AC83" }}
           disabled={isPending}
         >

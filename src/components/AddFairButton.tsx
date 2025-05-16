@@ -14,7 +14,7 @@ const AddFairButton = () => {
                      rounded-lg focus:outline-none focus:ring-3 focus:ring-emerald-200"
           style={{ backgroundColor: "#52AC83" }} 
         >
-          Submit
+          Add Fair
         </button>
       </div>
 
