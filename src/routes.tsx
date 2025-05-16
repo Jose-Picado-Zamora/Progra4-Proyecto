@@ -4,7 +4,7 @@ import DonorsPage from "./Pages/Donors";
 import VolunteersPage from "./pages/VolunteersPage";
 import EntrepreneursPage from "./pages/Entrepreneurs";
 import FairsPage from "./pages/Fairs";
-
+import HomePage from "./Pages/HomePage";
 import {
   createRootRoute,
   createRoute,
@@ -14,6 +14,12 @@ import {
 
 const rootRoute = createRootRoute({
   component: RootLayout,
+});
+
+const homeRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/",
+  component: HomePage,
 });
 
 const projectsRoute = createRoute({
@@ -47,6 +53,7 @@ const fairsRoute = createRoute({
 });
 
 rootRoute.addChildren([
+  homeRoute,
   projectsRoute,
   donorsRoute,
   volunteersRoute,

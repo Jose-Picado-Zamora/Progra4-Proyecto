@@ -5,10 +5,10 @@ const Navbar = () => {
   const darkBlue = "#0A4558"; 
   return (
     <nav
-      className={`text-white px-6 py-4 flex justify-between items-center shadow-md`}
+      className={`text-white px-6 py-4 flex justify-center items-center shadow-md`}
       style={{ backgroundColor: darkBlue }}
     >
-      <Link to="/" className="flex items-center">
+      <Link to="/" className="flex items-center mr-100"> 
         <img src="/logo.png" alt="Fundación logo" className="h-8 w-auto mr-2" />
       </Link>
 
@@ -20,8 +20,7 @@ const Navbar = () => {
         <li><Link to="/entrepreneurs" className="hover:text-gray-300">Entrepreneurs</Link></li>
       </ul>
 
-      <div>
-        <Link to="/login" className="font-semibold hover:text-gray-300">Login</Link>
+      <div className="ml-auto">
       </div>
     </nav>
   );

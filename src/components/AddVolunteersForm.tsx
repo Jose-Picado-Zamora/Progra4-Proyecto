@@ -1,11 +1,9 @@
 import { useForm } from '@tanstack/react-form'
 import { useAddVolunteers } from '../Services/VolunteersService'
-
 type AddVolunteerFormProps = { onClose: () => void; };
 
 const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
-    
-// 1) grab your mutation
+ 
   const {
     mutate: addVolunteer,
     isPending:
@@ -15,7 +13,7 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
     isSuccess,
   } = useAddVolunteers()
 
-  // 1️⃣ Initialize form state with defaultValues and a submit handler
+  // Initialize form state with defaultValues
   const form = useForm({
     defaultValues: {
       id: '',
@@ -24,23 +22,24 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
       email: '',
       address: '',
       rol: '',
+      projectName: '',
     },
-    // 3) when the user submits, call your mutation
+
+    // when the user submits, adds the volunteer
+    // and reset the form
     onSubmit: async ({ value }) => {
       addVolunteer({
         ...value,
-        id: Number(value.id), // trasforma de string a number
+        id: Number(value.id), // trasforms  string to number
       });
       form.reset();
       onClose();
     },
   })
 
-  
-
   return (
     <form
-      className="space-y-6"
+      className="space-y-6 max-h-[80vh] overflow-y-auto p-4"
       onSubmit={e => {
         e.preventDefault()
         e.stopPropagation()
@@ -61,12 +60,11 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
               className= "border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              
+              required
             />
           )}
         </form.Field>
       </div>
-
       {/* ─── Name Field ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="name" className="mb-1 text-gray-700 font-medium">
@@ -80,12 +78,13 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="border border-gray-300 rounded px-3 py-2
+              focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
             />
           )}
         </form.Field>
       </div>
-
       {/* ─── Name Field ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="phone" className="mb-1 text-gray-700 font-medium">
@@ -100,11 +99,11 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
               className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
             />
           )}
         </form.Field>
       </div>
-
       {/* ─── Email Field ────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="email" className="mb-1 text-gray-700 font-medium">
@@ -120,11 +119,11 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
               className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
             />
           )}
         </form.Field>
       </div>
-
       {/* ─── Address Field ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="address" className="mb-1 text-gray-700 font-medium">
@@ -139,6 +138,7 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
               className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
             />
           )}
         </form.Field>
@@ -146,7 +146,7 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
 
       {/* ─── Rol Field ─────────────────────── */}
       <div className="flex flex-col">
-        <label htmlFor="solicitud" className="mb-1 text-gray-700 font-medium">
+        <label htmlFor="rol" className="mb-1 text-gray-700 font-medium">
           Rol:
         </label>
         <form.Field name="rol">
@@ -158,17 +158,36 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
               className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
             />
           )}
         </form.Field>
       </div>
-
+      {/* ─── Project name Field ─────────────────────── */}
+      <div className="flex flex-col">
+        <label htmlFor="projectName" className="mb-1 text-gray-700 font-medium">
+          Project name:
+        </label>
+        <form.Field name="projectName">
+          {field => (
+            <input
+              id="projectName"
+              name="projectName"
+              value={field.state.value}
+              onChange={e => field.handleChange(e.target.value)}
+              onBlur={field.handleBlur}
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
+            />
+          )}
+        </form.Field>
+      </div> 
       {/* ─── Buttons ────────────────────────── */}
       <div className="flex space-x-4">
         <button
           type="submit"
           disabled={!form.state.canSubmit}
-          className={` text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50`}
+          className="text-white px-4 py-2 rounded focus:ring-3 focus:ring-emerald-200 disabled:opacity-50"
           style={{ backgroundColor: '#52AC83' }}
         >
           Submit

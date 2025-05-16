@@ -11,16 +11,16 @@ const AddProjectsButton = () =>
     const handleClose = () => {
         setShowAddModal(false);
     }
-    const tpfGreen = '#52AC83';
+
     return (
         <>
             {/* Button row */}
             <div className="flex justify-end mb-4">
                 <button
                     onClick={() => setShowAddModal(true)}
-                    className={`px-5 py-2.5 text-sm font-medium text-white 
-                            rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"`}
-                    style={{ backgroundColor: tpfGreen }}
+                    className="px-5 py-2.5 text-sm font-medium text-white 
+                            rounded-lg focus:ring-3 focus:ring-emerald-200"
+                    style={{ backgroundColor: '#52AC83' }}
                 >
                     Add Project
                 </button>
