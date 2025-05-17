@@ -6,7 +6,7 @@ type AddProjectsFormProps = { onClose: () => void }
 
 const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
 
-  // 1) grab your mutation
+  // 1) se guarda la mutacion
   const {
     mutate: addProject,
     isPending:
@@ -16,7 +16,7 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
     isSuccess,
   } = useAddProject()
 
-  // 1️⃣ Initialize form state with defaultValues and a submit handler
+  
   const form = useForm({
     defaultValues: {
       id: '',
@@ -25,11 +25,11 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
       ubicacion: '',
       solicitudProyecto: '',
     },
-    // 3) when the user submits, call your mutation
+    
     onSubmit: async ({ value }) => {
       addProject({
         ...value,
-        id: Number(value.id), // aquí haces la conversión a number
+        id: Number(value.id), // aquí se hace la conversión a number
       });
       form.reset()
       onClose();
@@ -45,7 +45,7 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         form.handleSubmit()
       }}
     >
-      {/* ─── ID Field ───────────────────────── */}
+      {/* ─── ID  ───────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="id" className="mb-1 text-gray-700 font-medium">
           ID:
@@ -65,7 +65,7 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         </form.Field>
       </div>
 
-      {/* ─── Name Field ─────────────────────── */}
+      {/* ─── Name  ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="name" className="mb-1 text-gray-700 font-medium">
           Name:
@@ -85,7 +85,7 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         </form.Field>
       </div>
 
-      {/* ─── Email Field ────────────────────── */}
+      {/* ─── Email ────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="email" className="mb-1 text-gray-700 font-medium">
           Email:
@@ -106,10 +106,10 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         </form.Field>
       </div>
 
-      {/* ─── Ubicacion Field ─────────────────────── */}
+      {/* ─── Location Field ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="ubicacion" className="mb-1 text-gray-700 font-medium">
-          Ubicacion:
+          Location:
         </label>
         <form.Field name="ubicacion">
           {field => (
@@ -126,10 +126,10 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
         </form.Field>
       </div>
 
-      {/* ─── Solicitud Proyecto ─────────────────────── */}
+      {/* ─── Application Project ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="solicitud" className="mb-1 text-gray-700 font-medium">
-          Solicitud:
+          Application:
         </label>
         <form.Field name="solicitudProyecto">
           {field => (

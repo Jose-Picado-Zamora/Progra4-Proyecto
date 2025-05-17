@@ -14,7 +14,7 @@ const AddProjectsButton = () =>
 
     return (
         <>
-            {/* Button row */}
+            
             <div className="flex justify-end mb-4">
                 <button
                     onClick={() => setShowAddModal(true)}
@@ -26,7 +26,7 @@ const AddProjectsButton = () =>
                 </button>
             </div>
 
-            {/* Modal */}
+          
             <GenericModal
                 show={showAddModal}
                 onClose={() => handleClose()}
