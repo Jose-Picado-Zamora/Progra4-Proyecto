@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import FairsList from "../components/FairsList";
-import AddFairButton from "../components/AddFairButton";
+import FairsList from "../Components/FairsList";
+import AddFairButton from "../Components/AddFairButton";
 
 
 const Fairs = () => {
