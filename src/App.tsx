@@ -1,10 +1,10 @@
 import Navbar from "./Components/Navbar";
 import { Routes, Route } from "react-router-dom";
-import Ferias from "./Pages/Fairs";
-import ProjectsPage from "./Pages/ProjectsPages";
-import Donors from "./Pages/Donors";
+import Ferias from "./Pages/FairsPage";
+import ProjectsPage from "./Pages/ProjectsPage";
+import Donors from "./Pages/DonorsPage";
 import VolunteersPage from "./Pages/VolunteersPage";
-import EntrepreneursPage from "./Pages/Entrepreneurs";
+import EntrepreneursPage from "./Pages/EntrepreneursPage";
 import './App.css'
 
 function App() {

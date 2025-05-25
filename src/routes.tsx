@@ -1,9 +1,9 @@
-import RootLayout from "./components/RootLayout";
-import ProjectsPage from "./Pages/ProjectsPages";
-import DonorsPage from "./Pages/Donors";
-import VolunteersPage from "./pages/VolunteersPage";
-import EntrepreneursPage from "./pages/Entrepreneurs";
-import FairsPage from "./pages/Fairs";
+import RootLayout from "./Components/RootLayout";
+import ProjectsPage from "./Pages/ProjectsPage";
+import DonorsPage from "./Pages/DonorsPage";
+import VolunteersPage from "./Pages/VolunteersPage";
+import EntrepreneursPage from "./Pages/EntrepreneursPage";
+import FairsPage from "./Pages/FairsPage";
 import HomePage from "./Pages/HomePage";
 import {
   createRootRoute,
