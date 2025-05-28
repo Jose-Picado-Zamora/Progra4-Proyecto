@@ -18,6 +18,7 @@ const Navbar = () => {
         <li><Link to="/donors" className="hover:text-gray-300">Donors</Link></li>
         <li><Link to="/fairs" className="hover:text-gray-300">Fairs</Link></li>
         <li><Link to="/entrepreneurs" className="hover:text-gray-300">Entrepreneurs</Link></li>
+        <li><Link to="/login" className="hover:text-gray-300">Login</Link></li>
       </ul>
 
       <div className="ml-auto">
