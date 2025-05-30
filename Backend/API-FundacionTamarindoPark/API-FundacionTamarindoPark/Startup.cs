@@ -83,9 +83,9 @@ namespace LibraryService.WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "LibraryService API",
+                    Title = " API - Fundacion Tamarindo Park",
                     Version = "v1",
-                    Description = "A simple example ASP.NET Core Web API for LibraryService"
+                    Description = "A simple example ASP.NET Core Web API for Fundacion Tamarindo Park"
                 });
             });
         }
@@ -108,7 +108,7 @@ namespace LibraryService.WebAPI
                 // Enable middleware to serve swagger-ui, specifying the Swagger JSON endpoint.
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "LibraryService API v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fundacion Tamarindo Park API v1");
                 });
             }
 

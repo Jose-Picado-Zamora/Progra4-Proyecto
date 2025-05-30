@@ -1,5 +1,6 @@
 import { useLogin } from '../Hook/UseLogin';
 import { decodeToken, client as axiosClient } from '../Services/AuthService';
+import {User} from '../Services/AuthService'
 import {
   createContext,
   useContext,
@@ -8,19 +9,24 @@ import {
   useEffect,
 } from 'react';
 
+
+
 interface AuthContextType {
   token: string | null;
   setToken: (token: string | null) => void;
-  handleLogin: (email: string, password: string) => Promise<any>;
+  handleLogin: (email: string, password: string) => Promise<User>;
   isLoading: boolean;
   isError: boolean;
   logout: () => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const {
     mutateAsync: loginMutation,
@@ -34,18 +40,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setToken(newToken);
       localStorage.setItem('authToken', newToken);
       axiosClient.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-      const data = decodeToken(newToken); 
-      return data;
+     
+      const decodedUser = decodeToken(newToken); 
+      setUser(decodedUser); 
+      return decodedUser;
     } catch (error) {
       console.error("Login error:", error);
       throw error;
     }
   };
 
-  const logout = () => {
+   const logout = () => {
     localStorage.removeItem('authToken');
     delete axiosClient.defaults.headers.common['Authorization'];
     setToken(null);
+    setUser(null);
   };
 
   useEffect(() => {
@@ -53,6 +62,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (storedToken) {
       setToken(storedToken);
       axiosClient.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+
+      const decodedUser = decodeToken(storedToken);
+      setUser(decodedUser);
     }
   }, []);
 
@@ -65,6 +77,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isLoading,
         isError,
         logout,
+        user,
+        setUser
       }}
     >
       {children}
