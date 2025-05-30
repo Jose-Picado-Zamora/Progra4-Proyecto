@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using API_FundacionTamarindoPark.Entities;
+using API_FundacionTamarindoPark.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace LibraryService.WebAPI
 {
@@ -26,7 +28,51 @@ namespace LibraryService.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+
+            // 1. jwtSettings binding
+            var jwtSettings = Configuration
+                                .GetSection("JwtSettings")
+                                .Get<JwtSettings>()
+                                ?? throw new InvalidOperationException("Invalid JWT Settings");
+
+            // 2. Registro de DI
+
+            services.AddSingleton(jwtSettings);
+            // Cambia el registro del servicio
+            services.AddScoped<IUserAuthService, UserAuthService>();
+
+            // 3. Configurar Authenticacion
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(option =>
+                {
+                    option.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
+
+                        ValidateIssuer = true,
+                        ValidIssuer = jwtSettings.Issuer,
+
+                        ValidateAudience = true,
+                        ValidAudience = jwtSettings.Audience,
+
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("DevCors", policy =>
+                    policy.WithOrigins("http://localhost:5173")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                );
+            });
+
             services.AddAuthorization();
+
 
 
             services.AddControllers();
@@ -43,6 +89,10 @@ namespace LibraryService.WebAPI
                 });
             });
         }
+
+
+     
+    
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -63,7 +113,7 @@ namespace LibraryService.WebAPI
             }
 
             app.UseRouting();
-
+            app.UseCors("DevCors");
 
             app.UseAuthentication();
             app.UseAuthorization();
