@@ -13,6 +13,13 @@ type LoginParams = {
   password: string;
 };
 
+export interface User {
+  id: number;
+  email: string;
+  password: string;
+  role: string;
+};
+
 export async function login({ email, password }: LoginParams): Promise<string> {
   const { data } = await client.post<{ token: string }>("login", {
     email,
@@ -21,6 +28,6 @@ export async function login({ email, password }: LoginParams): Promise<string> {
   return data.token;
 }
 
-export function decodeToken(token: string) {
-  return jwtDecode(token);
+export function decodeToken(token: string): User{
+   return jwtDecode<User>(token);
 }

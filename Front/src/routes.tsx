@@ -5,7 +5,7 @@ import VolunteersPage from "./Pages/VolunteersPage";
 import EntrepreneursPage from "./Pages/EntrepreneursPage";
 import FairsPage from "./Pages/FairsPage";
 import HomePage from "./Pages/HomePage";
-import LoginPage from "./Pages/LoginPage";
+
 
 import {
   createRootRoute,
@@ -54,11 +54,6 @@ const fairsRoute = createRoute({
   component: FairsPage,
 });
 
-const loginRoute = createRoute({
-    getParentRoute: () => rootRoute,
-    path: "/login",
-    component: LoginPage,
-}); 
 
 
 rootRoute.addChildren([
@@ -68,7 +63,6 @@ rootRoute.addChildren([
   volunteersRoute,
   entrepreneursRoute,
   fairsRoute,
-  loginRoute,
 ]);
 
 const router = createRouter({

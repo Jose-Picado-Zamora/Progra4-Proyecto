@@ -22,7 +22,6 @@ export default function Login() {
             console.error("Login failed:", error);
         }
     };
-
     return (
         <form
             onSubmit={handleSubmit}
@@ -31,20 +30,20 @@ export default function Login() {
             <input
                 ref={emailRef}
                 placeholder="Correo"
-                className="w-full px-3 py-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#0A4558]"
             />
 
             <input
                 type="password"
                 ref={passwordRef}
                 placeholder="Contraseña"
-                className="w-full px-3 py-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#0A4558]"
             />
 
             <button
                 type="submit"
                 disabled={loginLoading}
-                className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded focus:outline-none focus:ring-2 focus:ring-blue-500 transition disabled:opacity-50"
+                className="w-full py-2 px-4 text-white font-medium rounded focus:outline-none focus:ring-2 transition disabled:opacity-50 bg-[#0A4558] focus:ring-[#0A4558]"
             >
                 {loginLoading ? 'Ingresando…' : 'Ingresar'}
             </button>
