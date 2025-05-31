@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
-namespace LibraryService.WebAPI
+namespace API_FundacionTamarindoPark.WebAPI
 {
     public class Startup
     {

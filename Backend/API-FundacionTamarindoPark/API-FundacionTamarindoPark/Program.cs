@@ -2,7 +2,7 @@ using API_FundacionTamarindoPark;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace LibraryService.WebAPI
+namespace API_FundacionTamarindoPark.WebAPI
 {
     public class Program
     {
