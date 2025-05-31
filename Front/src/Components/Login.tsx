@@ -24,7 +24,7 @@ export default function Login() {
     };
     return (
         <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit} 
             className="max-w-sm mx-auto mt-10 p-6 bg-gray-50 rounded-lg shadow"
         >
             <input
