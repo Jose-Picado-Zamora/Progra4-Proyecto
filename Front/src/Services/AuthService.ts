@@ -21,7 +21,7 @@ export interface User {
 };
 
 export async function login({ email, password }: LoginParams): Promise<string> {
-  const { data } = await client.post<{ token: string }>("login", {
+  const { data } = await client.post<{ token: string }>("/login", {
     email,
     password,
   });

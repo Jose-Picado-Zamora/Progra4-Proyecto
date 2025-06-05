@@ -22,8 +22,8 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
       id: '',
       name: '',
       email: '',
-      ubicacion: '',
-      solicitudProyecto: '',
+      location: '',
+      application: '',
     },
     
     onSubmit: async ({ value }) => {
@@ -108,15 +108,15 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
 
       {/* ─── Location Field ─────────────────────── */}
       <div className="flex flex-col">
-        <label htmlFor="ubicacion" className="mb-1 text-gray-700 font-medium">
+        <label htmlFor="location" className="mb-1 text-gray-700 font-medium">
           Location:
         </label>
-        <form.Field name="ubicacion">
+        <form.Field name="location">
           {field => (
             <input
               required
-              id="ubicacion"
-              name="ubicacion"
+              id="location"
+              name="location"
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
@@ -128,15 +128,15 @@ const AddProjectForm = ({ onClose }: AddProjectsFormProps) => {
 
       {/* ─── Application Project ─────────────────────── */}
       <div className="flex flex-col">
-        <label htmlFor="solicitud" className="mb-1 text-gray-700 font-medium">
+        <label htmlFor="application" className="mb-1 text-gray-700 font-medium">
           Application:
         </label>
-        <form.Field name="solicitudProyecto">
+        <form.Field name="application">
           {field => (
             <input
               required
-              id="solicitud"
-              name="solicitudProyecto"
+              id="application"
+              name="application"
               value={field.state.value}
               onChange={e => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}

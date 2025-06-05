@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectService.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/projects")]
     [ApiController]
     
     public class ProjectsController : ControllerBase
