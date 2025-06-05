@@ -46,6 +46,7 @@ namespace API_FundacionTamarindoPark.WebAPI
             // Cambia el registro del servicio
             services.AddScoped<IUserAuthService, UserAuthService>();
             services.AddScoped<API_FundacionTamarindoPark.Services.IProjectsService, API_FundacionTamarindoPark.Services.ProjectService>();
+            services.AddScoped<API_FundacionTamarindoPark.Services.IDonorService, API_FundacionTamarindoPark.Services.DonorService>();
 
 
 
@@ -85,6 +86,7 @@ namespace API_FundacionTamarindoPark.WebAPI
 
 
             services.AddDbContext<ProjectContext>(options => options.UseInMemoryDatabase("projectdb"));
+            services.AddDbContext<DonorContext>(options => options.UseInMemoryDatabase("projectdb"));
             services.AddControllers();
 
 

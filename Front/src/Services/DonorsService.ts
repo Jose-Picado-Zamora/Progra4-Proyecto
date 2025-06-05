@@ -1,11 +1,22 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+import { useAuth } from '../Context/AuthContext';
 
-const BIN = "6822a6d28960c979a5984f90";
-const DONORS_API_URL = "https://api.jsonbin.io/v3/b/" + BIN;
-const API_KEY = "$2a$10$q/7rPPZIYpiuFZiF2pfXMu20KI4WFbZwI6vHnrA8IkN2jZrtdyxCG";
+const useAuthorizedClient = () => {
+  const { token } = useAuth();
 
-export type Donor = {
+  const authorizedClient = axios.create({
+    baseURL: 'https://localhost:7210', 
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+
+  return authorizedClient;
+};
+
+type Donor = {
   id: number;
   name: string;
   email: string;
@@ -14,78 +25,70 @@ export type Donor = {
   details: string;
 };
 
-const fetchDonors = async (): Promise<Donor[]> => {
-  try {
-    const response = await axios.get(DONORS_API_URL, {
-      headers: {
-        "X-Access-Key": API_KEY,
-      },
-    });
+export const useDonorService = () => {
+  const client = useAuthorizedClient();
 
-    return response.data.record.donors ?? [];
-  } catch (error) {
-    console.error("Error fetching donors:", error);
-    return [];
-  }
+  const fetchDonors = async (): Promise<Donor[]> => {
+    try {
+      const response = await client.get('/api/donors');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching donors:', error);
+      return [];
+    }
+  };
+
+  const postDonor = async (newDonor: Donor) => {
+    try {
+      const response = await client.post('/api/donors', newDonor);
+
+      if (response.status !== 200 && response.status !== 201)
+        throw new Error("Error adding donor");
+
+      return response.data;
+    } catch (error) {
+      console.error("Error adding donor:", error);
+      throw error;
+    }
+  };
+
+  return { fetchDonors, postDonor };
 };
 
 export const useDonors = () => {
+  const { fetchDonors } = useDonorService();
+
   return useQuery({
-    queryKey: ["donors"],
+    queryKey: ['donors'],
     queryFn: fetchDonors,
     staleTime: 5 * 60 * 1000,
     retry: 1,
   });
 };
 
-export async function postDonor(newDonor: Donor): Promise<Donor | void> {
-  const donors = await fetchDonors();
-  donors.push(newDonor);
-
-  try {
-    const response = await axios.put(
-      DONORS_API_URL,
-      { donors },
-      {
-        headers: {
-          "X-Access-Key": API_KEY,
-        },
-      }
-    );
-
-    if (response.status !== 200) {
-      throw new Error("Failed to add donor.");
-    }
-
-    return newDonor;
-  } catch (error) {
-    console.error("Error adding donor:", error);
-  }
-}
-
 export function useAddDonor() {
   const queryClient = useQueryClient();
+  const { postDonor } = useDonorService();
 
   return useMutation({
     mutationFn: postDonor,
     onMutate: async (newDonor) => {
-      await queryClient.cancelQueries({ queryKey: ["donors"] });
-      const previous = queryClient.getQueryData(["donors"]);
+      await queryClient.cancelQueries({ queryKey: ['donors'] });
+      const previous = queryClient.getQueryData(['donors']);
 
-      queryClient.setQueryData<Donor[]>(["donors"], (old) => [
-        ...(old || []),
-        newDonor,
-      ]);
+     queryClient.setQueryData<Donor[]>(['donors'], (old) => {
+        return [...(old || []), newDonor];
+      });
 
       return { previous };
     },
     onError: (_err, _variables, context) => {
       if (context?.previous) {
-        queryClient.setQueryData(["donors"], context.previous);
+        queryClient.setQueryData(['donors'], context.previous);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["donors"] });
+      queryClient.invalidateQueries({ queryKey: ['donors'] });
     },
   });
 }
