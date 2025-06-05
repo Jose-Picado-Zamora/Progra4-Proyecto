@@ -3129,23 +3129,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\campo\\.nuget\\packages\\": {},
+    "C:\\Users\\billy\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\campo\\OneDrive\\Desktop\\Progra-IV\\Project - Progra IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
+      "projectUniqueName": "C:\\Users\\billy\\OneDrive - Universidad Nacional de Costa Rica\\Escritorio\\1_Semestre25\\Progra\\Fronted\\Proyecto1\\repo\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
       "projectName": "API-FundacionTamarindoPark",
-      "projectPath": "C:\\Users\\campo\\OneDrive\\Desktop\\Progra-IV\\Project - Progra IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
-      "packagesPath": "C:\\Users\\campo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\campo\\OneDrive\\Desktop\\Progra-IV\\Project - Progra IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\obj\\",
+      "projectPath": "C:\\Users\\billy\\OneDrive - Universidad Nacional de Costa Rica\\Escritorio\\1_Semestre25\\Progra\\Fronted\\Proyecto1\\repo\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
+      "packagesPath": "C:\\Users\\billy\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\billy\\OneDrive - Universidad Nacional de Costa Rica\\Escritorio\\1_Semestre25\\Progra\\Fronted\\Proyecto1\\repo\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\campo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\billy\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

@@ -1,6 +1,7 @@
 using API_FundacionTamarindoPark;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using API_FundacionTamarindoPark.Services;
 
 namespace API_FundacionTamarindoPark.WebAPI
 {

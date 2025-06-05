@@ -1,4 +1,3 @@
-
 import { getCoreRowModel, useReactTable, flexRender, ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useProjects } from "../Services/ProjectsService";
@@ -17,16 +16,16 @@ const ProjectsList = () => {
         id: number;
         name: string;
         email: string;
-        ubicacion: string;
-        solicitudProyecto: string;
+        location: string;
+        application: string;
     };
 
     const columns: ColumnDef<Project>[] = useMemo(() => [
         { header: 'ID', accessorKey: 'id' },
         { header: 'Name', accessorKey: 'name' },
         { header: 'Email', accessorKey: 'email' },
-        { header: 'Location', accessorKey: 'ubicacion', },
-        { header: 'Application', accessorKey: 'solicitudProyecto', },
+        { header: 'Location', accessorKey: 'location', },
+        { header: 'Application', accessorKey: 'application', },
     ], []);
 
     const table = useReactTable<Project>({

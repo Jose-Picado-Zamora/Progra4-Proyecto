@@ -1,25 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { useAuth } from '../Context/AuthContext';
 
-const BIN = '681cf12f8a456b796699e7ce';
-const PROJECTS_API_URL = 'https://api.jsonbin.io/v3/b/' + BIN;
-const API_KEY = '$2a$10$3dXKCW5tKrG09Iwfsx0Xi.GU6IPerttg6BUT8UdlJ0VhuQbkH.Rny';
 
-const fetchProjects = async () => {
-  try {
-    const response = await axios.get(PROJECTS_API_URL, {
-      headers: {
-        'X-Access-Key': API_KEY,
-      }
-    });
-    return response.data.record.projects;  // se retorna la informacion de la api de project
-  }
-  catch (error) {
-    console.error('Error fetching projects:', error);
+const useAuthorizedClient = () => {
+  const { token } = useAuth();
 
-    return [];
+  const authorizedClient = axios.create({
+    baseURL: 'https://localhost:7210',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
 
-  }
+  return authorizedClient;
 };
 
 type Project = {
@@ -27,67 +22,45 @@ type Project = {
   id: number;
   name: string;
   email: string;
-  ubicacion: string;
-  solicitudProyecto: string;
+  location: string;
+  application: string;
 }
 
+export const useProjectService = () => {
+  const client = useAuthorizedClient();
 
-
-export async function postProjects(newProject: Project) {
-
-  const projects = await fetchProjects();
-
-  projects.push(newProject);
-
-  try {
-    const response = await axios.put(
-      PROJECTS_API_URL,
-      { projects: projects },
-      {
-        headers: {
-          'X-Access-Key': API_KEY,
-        }
-      }
-    );
-
-    if (response.status != 200)
-      throw new Error("Error adding projects");
-
-    return newProject;
-  } catch (error) {
-    console.error("Error adding projects:", error);
-  }
-
-}
-
-export function useAddProject() {
-  const queryClient = useQueryClient()
-
-  
-  return useMutation({
-    mutationFn: postProjects,
-    onMutate: async (newProject) => {
-      await queryClient.cancelQueries({ queryKey: ['projects'] })
-      const previous = queryClient.getQueryData(['projects'])
-
-      queryClient.setQueryData<Project[]>(['projects'], (old) => {
-        return [...(old || []), newProject];
-      });
-
-      return { previous }
-    },
-    onError: (_err, _variables, context) => {
-      if (context?.previous) {
-        queryClient.setQueryData(['projects'], context.previous)
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({queryKey:['projects']})
+  const fetchProjects = async (): Promise<Project[]> => {
+    try {
+      const response = await client.get('/api/projects');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+      return [];
     }
-  })
-}
+  };
+
+  const postProjects = async (newProject: Project) => {
+    try {
+      //console.log("🚀 Proyecto a enviar:", JSON.stringify(newProject, null, 2));
+      const response = await client.post('/api/projects', newProject);
+
+      if (response.status !== 200 && response.status !== 201)
+        throw new Error("Error adding project");
+
+      return response.data;
+    } catch (error) {
+      console.error("Error adding projects:", error);
+      throw error;
+    }
+  };
+
+  return { fetchProjects, postProjects };
+};
+
 
 export const useProjects = () => {
+  const { fetchProjects } = useProjectService();
+
   return useQuery({
     queryKey: ['projects'],
     queryFn: fetchProjects,
@@ -95,3 +68,30 @@ export const useProjects = () => {
     retry: 1,
   });
 };
+
+export function useAddProject() {
+  const queryClient = useQueryClient();
+  const { postProjects } = useProjectService();
+
+  return useMutation({
+    mutationFn: postProjects,
+    onMutate: async (newProject) => {
+      await queryClient.cancelQueries({ queryKey: ['projects'] });
+      const previous = queryClient.getQueryData(['projects']);
+
+      queryClient.setQueryData<Project[]>(['projects'], (old) => {
+        return [...(old || []), newProject];
+      });
+
+      return { previous };
+    },
+    onError: (_err, _variables, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(['projects'], context.previous);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+    },
+  });
+}

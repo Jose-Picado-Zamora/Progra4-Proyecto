@@ -11,12 +11,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ProjectService.WebAPI.Data;
 using System.Text;
+
+
 
 namespace API_FundacionTamarindoPark.WebAPI
 {
     public class Startup
     {
+        
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,6 +45,11 @@ namespace API_FundacionTamarindoPark.WebAPI
             services.AddSingleton(jwtSettings);
             // Cambia el registro del servicio
             services.AddScoped<IUserAuthService, UserAuthService>();
+            services.AddScoped<API_FundacionTamarindoPark.Services.IProjectsService, API_FundacionTamarindoPark.Services.ProjectService>();
+
+
+
+
 
             // 3. Configurar Authenticacion
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -74,7 +84,7 @@ namespace API_FundacionTamarindoPark.WebAPI
             services.AddAuthorization();
 
 
-
+            services.AddDbContext<ProjectContext>(options => options.UseInMemoryDatabase("projectdb"));
             services.AddControllers();
 
 
