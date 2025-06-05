@@ -744,6 +744,22 @@
           }
         }
       },
+      "Newtonsoft.Json.Bson/1.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.Bson.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.Bson.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.6.2": {
         "type": "package",
         "dependencies": {
@@ -2503,6 +2519,28 @@
         "packageIcon.png"
       ]
     },
+    "Newtonsoft.Json.Bson/1.0.3": {
+      "sha512": "bCcwagnHfYnhwQfY1criEcn6Hy9PtBuVnZu0pA8hmRhuR3jI/8WxVgoVAdNw9BJ3JHkxmWJzpj/AQy+PMMLqxg==",
+      "type": "package",
+      "path": "newtonsoft.json.bson/1.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net45/Newtonsoft.Json.Bson.dll",
+        "lib/net45/Newtonsoft.Json.Bson.pdb",
+        "lib/net45/Newtonsoft.Json.Bson.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.Bson.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.Bson.pdb",
+        "lib/netstandard1.3/Newtonsoft.Json.Bson.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.Bson.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.Bson.pdb",
+        "lib/netstandard2.0/Newtonsoft.Json.Bson.xml",
+        "newtonsoft.json.bson.1.0.3.nupkg.sha512",
+        "newtonsoft.json.bson.nuspec",
+        "packageIcon.png"
+      ]
+    },
     "Swashbuckle.AspNetCore/6.6.2": {
       "sha512": "+NB4UYVYN6AhDSjW0IJAd1AGD8V33gemFNLPaxKTtPkHB+HaKAKf9MGAEUPivEWvqeQfcKIw8lJaHq6LHljRuw==",
       "type": "package",
@@ -3125,23 +3163,29 @@
       "Microsoft.EntityFrameworkCore >= 6.0.0",
       "Microsoft.EntityFrameworkCore.InMemory >= 6.0.0",
       "Newtonsoft.Json >= 13.0.3",
+      "Newtonsoft.Json.Bson >= 1.0.3",
       "Swashbuckle.AspNetCore >= 6.6.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\josea\\.nuget\\packages\\": {}
+    "C:\\Users\\billy\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\OneDrive - Universidad Nacional de Costa Rica\\UNA\\I Semestre 2025\\Programacion IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
+      "projectUniqueName": "C:\\Users\\billy\\OneDrive - Universidad Nacional de Costa Rica\\Escritorio\\1_Semestre25\\Progra\\Fronted\\Proyecto1\\repo\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
       "projectName": "API-FundacionTamarindoPark",
-      "projectPath": "D:\\OneDrive - Universidad Nacional de Costa Rica\\UNA\\I Semestre 2025\\Programacion IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
-      "packagesPath": "C:\\Users\\josea\\.nuget\\packages\\",
-      "outputPath": "D:\\OneDrive - Universidad Nacional de Costa Rica\\UNA\\I Semestre 2025\\Programacion IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\obj\\",
+      "projectPath": "C:\\Users\\billy\\OneDrive - Universidad Nacional de Costa Rica\\Escritorio\\1_Semestre25\\Progra\\Fronted\\Proyecto1\\repo\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
+      "packagesPath": "C:\\Users\\billy\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\billy\\OneDrive - Universidad Nacional de Costa Rica\\Escritorio\\1_Semestre25\\Progra\\Fronted\\Proyecto1\\repo\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\josea\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\billy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3149,7 +3193,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3167,7 +3210,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -3197,6 +3241,10 @@
             "target": "Package",
             "version": "[13.0.3, )"
           },
+          "Newtonsoft.Json.Bson": {
+            "target": "Package",
+            "version": "[1.0.3, )"
+          },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.6.2, )"
@@ -3221,7 +3269,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
