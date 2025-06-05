@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using ProjectService.WebAPI.Data;
 using API_FundacionTamarindoPark.Services;
 using System;
-using API_FundacionTamarindoPark.Entities;
+using API_FundacionTamarindoPark.DTO;
 using Microsoft.AspNetCore.Authorization;
+
 
 namespace ProjectService.WebAPI.Controllers
 {

@@ -3,6 +3,7 @@ using API_FundacionTamarindoPark.Helpers;
 using API_FundacionTamarindoPark.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using API_FundacionTamarindoPark.DTO;
 
 namespace API_FundacionTamarindoPark.Controllers;
 

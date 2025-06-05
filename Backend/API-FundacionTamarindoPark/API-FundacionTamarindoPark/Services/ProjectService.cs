@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectService.WebAPI.Data;
 using API_FundacionTamarindoPark.Entities;
+using API_FundacionTamarindoPark.DTO;
 
 
 
@@ -31,7 +32,7 @@ public class ProjectService : IProjectsService
             return await projects.ToListAsync();
         }
 
-        public async Task<API_FundacionTamarindoPark.Entities.Project> Add(Project project)
+        public async Task<API_FundacionTamarindoPark.DTO.Project> Add(Project project)
         {
             await _projectContext.Projects.AddAsync(project);
 

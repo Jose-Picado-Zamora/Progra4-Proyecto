@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
-using API_FundacionTamarindoPark.Entities;
+using API_FundacionTamarindoPark.DTO;
 
 namespace ProjectService.WebAPI.Data
 {
