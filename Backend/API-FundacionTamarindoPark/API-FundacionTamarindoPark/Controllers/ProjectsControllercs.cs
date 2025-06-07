@@ -37,8 +37,18 @@ namespace ProjectService.WebAPI.Controllers
             await _projectsService.Add(p);
             return Ok(p);
         }
-    }
+        [HttpPut("{projectId}")]
+        [Authorize]
+        public async Task<IActionResult> Update(int projectId, Project project)
+        {
+            var existinProject = (await _projectsService.Get(new[] { projectId })).FirstOrDefault();
+            if (existinProject == null)
+                return NotFound();
 
+            await _projectsService.Update(project);
+            return Ok(project);
+        }
+    }
 
 }
 
