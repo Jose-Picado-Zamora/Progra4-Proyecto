@@ -11,6 +11,7 @@ public interface IProjectsService
 {
     Task<IEnumerable<Project>> Get(int[] ids);
     Task<Project> Add(Project project);
+    Task<Project> Update(Project project);
 }
 public class ProjectService : IProjectsService
     {
@@ -39,7 +40,20 @@ public class ProjectService : IProjectsService
             await _projectContext.SaveChangesAsync();
             return project;
         }
-    }
+
+        public async Task<Project> Update(Project projects)
+        {
+            var projectForChanges = await _projectContext.Projects.SingleAsync(x => x.Id == projects.Id);
+            projectForChanges.Name = projects.Name;
+            projectForChanges.Email = projects.Email;
+            projectForChanges.Location = projects.Location;
+            projectForChanges.Application = projects.Application;
+
+            _projectContext.Projects.Update(projectForChanges);
+            await _projectContext.SaveChangesAsync();
+            return projects;
+        }
+}
 
   
 
