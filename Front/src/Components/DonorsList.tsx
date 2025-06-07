@@ -1,6 +1,7 @@
 import { getCoreRowModel, useReactTable, flexRender, ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useDonors } from "../Services/DonorsService";
+import EditDonorsButton from "./EditDonorsButton"; 
 
 const DonorsList = () => {
   const { data, isLoading, isError, error } = useDonors();
@@ -23,7 +24,13 @@ const DonorsList = () => {
     { header: 'Phone', accessorKey: 'phone' },
     { header: 'Donation Type', accessorKey: 'donationType' },
     { header: 'Details', accessorKey: 'details' },
-  ], []);
+
+    {
+      header: 'Actions',
+      cell: ({ row }) => <EditDonorsButton donor={row.original} />
+    }
+
+  ], []); 
 
   const table = useReactTable<Donor>({
     data: donors,

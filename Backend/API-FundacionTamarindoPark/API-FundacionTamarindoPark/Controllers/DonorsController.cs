@@ -35,5 +35,21 @@ namespace ProjectService.WebAPI.Controllers
             await _donorService.Add(donor);
             return Ok(donor);
         }
+
+        [HttpPut("{donorId}")]
+        [Authorize]
+        public async Task<IActionResult> Update(int donorId, Donor donor)
+        {
+            var existingDonor = (await _donorService.Get(new[] { donorId })).FirstOrDefault();
+            if (existingDonor == null)
+                return NotFound();
+
+            donor.Id = donorId; 
+
+            await _donorService.Update(donor);
+            return Ok(donor);
+        }
+
+
     }
 }
