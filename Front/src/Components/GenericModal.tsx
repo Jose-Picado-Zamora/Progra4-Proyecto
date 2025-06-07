@@ -1,5 +1,3 @@
-
-
 import { ReactNode } from "react";
 
 type GenericModalProps = {
@@ -10,32 +8,31 @@ type GenericModalProps = {
 };
 
 const GenericModal = ({ show, onClose, title, children }: GenericModalProps) => {
+  if (!show) return null;
 
-    if (!show) return null;
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
+    >
+      <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+        {}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl leading-none"
+        >
+          &times;
+        </button>
 
-    return (
-      // backdrop
-      <div className="fixed inset-0 z-50 flex items-center justify-center"
-      style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
-        {/* panel */}
-        <div className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-          {/* close button */}
-          <button
-            onClick={onClose}
-            className="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl leading-none"
-          >
-            &times;
-          </button>
-  
-          {/* optional title */}
-          {title && <h2 className="mb-4 text-xl font-semibold">{title}</h2>}
-  
-          {/* whatever you pass in */}
-          {children}
-        </div>
+        {}
+        {title && (
+          <h2 className="text-center text-2xl font-bold mb-4">{title}</h2>
+        )}
+
+        {children}
       </div>
-    );
-  
-}
+    </div>
+  );
+};
 
 export default GenericModal;
