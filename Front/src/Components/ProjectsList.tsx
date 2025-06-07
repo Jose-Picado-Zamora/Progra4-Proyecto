@@ -1,7 +1,7 @@
 import { getCoreRowModel, useReactTable, flexRender, ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useProjects } from "../Services/ProjectsService";
-
+import EditProjectButton from "./EditProjectsButton";
 
 
 const ProjectsList = () => {
@@ -26,6 +26,11 @@ const ProjectsList = () => {
         { header: 'Email', accessorKey: 'email' },
         { header: 'Location', accessorKey: 'location', },
         { header: 'Application', accessorKey: 'application', },
+
+        {
+            header: 'Actions',
+            cell: ({ row }) => <EditProjectButton project={row.original} />
+        }
     ], []);
 
     const table = useReactTable<Project>({

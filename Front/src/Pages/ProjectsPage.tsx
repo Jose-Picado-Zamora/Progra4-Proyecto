@@ -5,21 +5,26 @@ import { useAuth } from "../Context/AuthContext.js";
 import Login from "../Components/Login.js";
 
 
+
 const ProjectsPage = () => {
 
     const queryClient = new QueryClient();
 
-    const { user } = useAuth(); 
+    const { user } = useAuth();
 
     return (
         <QueryClientProvider client={queryClient}>
-            {user?
-              <div className="p-4">
-                <AddProjectsButton />
-                <ProjectsList />
+            {user ?
+                // Dentro del render de ProjectsPage
 
-            </div>
-            : <Login/>
+                <div className="w-full px-6">
+                    <div className="flex justify-end gap-4 mb-4">
+                        <AddProjectsButton />
+                    </div>
+                    <ProjectsList />
+                </div>
+
+                : <Login />
             }
         </QueryClientProvider>
     );
