@@ -47,6 +47,7 @@ namespace API_FundacionTamarindoPark.WebAPI
             services.AddScoped<IUserAuthService, UserAuthService>();
             services.AddScoped<API_FundacionTamarindoPark.Services.IProjectsService, API_FundacionTamarindoPark.Services.ProjectService>();
             services.AddScoped<API_FundacionTamarindoPark.Services.IDonorService, API_FundacionTamarindoPark.Services.DonorService>();
+            services.AddScoped<API_FundacionTamarindoPark.Services.IFairService, API_FundacionTamarindoPark.Services.FairService>();
 
 
 
@@ -87,6 +88,7 @@ namespace API_FundacionTamarindoPark.WebAPI
 
             services.AddDbContext<ProjectContext>(options => options.UseInMemoryDatabase("projectdb"));
             services.AddDbContext<DonorContext>(options => options.UseInMemoryDatabase("projectdb"));
+            services.AddDbContext<FairContext>(options => options.UseInMemoryDatabase("projectdb"));
             services.AddControllers();
 
 
