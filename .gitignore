@@ -61,3 +61,8 @@ Thumbs.db
 .DS_Store # Mac specific
 *.orig
 *.swp # Vim swap files
+
+*.nuget.*
+*.props
+*.assets.json
+obj/
