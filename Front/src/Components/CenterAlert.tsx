@@ -5,6 +5,7 @@ type Props = {
   onClose: () => void;
 };
 
+
 const CenterAlert = ({ message, onClose }: Props) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">

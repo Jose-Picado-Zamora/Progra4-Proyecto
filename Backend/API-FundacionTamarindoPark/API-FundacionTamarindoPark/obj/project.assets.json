@@ -3129,19 +3129,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\josea\\.nuget\\packages\\": {}
+    "C:\\Users\\Brandon\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\OneDrive - Universidad Nacional de Costa Rica\\UNA\\I Semestre 2025\\Programacion IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
+      "projectUniqueName": "C:\\Users\\Brandon\\Documents\\UNA\\1° Semestre 2025\\Programación IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
       "projectName": "API-FundacionTamarindoPark",
-      "projectPath": "D:\\OneDrive - Universidad Nacional de Costa Rica\\UNA\\I Semestre 2025\\Programacion IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
-      "packagesPath": "C:\\Users\\josea\\.nuget\\packages\\",
-      "outputPath": "D:\\OneDrive - Universidad Nacional de Costa Rica\\UNA\\I Semestre 2025\\Programacion IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\obj\\",
+      "projectPath": "C:\\Users\\Brandon\\Documents\\UNA\\1° Semestre 2025\\Programación IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark.csproj",
+      "packagesPath": "C:\\Users\\Brandon\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Brandon\\Documents\\UNA\\1° Semestre 2025\\Programación IV\\Progra4-Proyecto\\Backend\\API-FundacionTamarindoPark\\API-FundacionTamarindoPark\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\josea\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Brandon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3149,7 +3154,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3167,7 +3171,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -3221,7 +3226,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
