@@ -1,96 +1,147 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+// Services/VolunteersService.ts
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { useAuth } from '../Context/AuthContext';
 
-const BIN = '6822aa6e8960c979a598516e';
-const VOLUNTEERS_API_URL = 'https://api.jsonbin.io/v3/b/' + BIN;
-const API_KEY = '$2a$10$kcsGIb0kADjvgFmd6WhbruqwCdNaU0mA1ZPKoV6T23K1RNxzoC8ou';
+const useAuthorizedClient = () => {
+  const { token } = useAuth();
 
-const fetchVolunteers = async () => {
-  try {
-    const response = await axios.get(VOLUNTEERS_API_URL, {
-      headers: {
-        'X-Access-Key': API_KEY,
-      }
-    });
-    return response.data.record.volunteers;
-  }
-  catch (error) {
-    console.error('Error fetching volunteers:', error);
+  const authorizedClient = axios.create({
+    baseURL: 'https://localhost:7210', 
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
 
-    return [];
-
-  }
+  return authorizedClient;
 };
 
-type Volunteer = {
-
+export type Volunteer = {
   id: number;
   name: string;
   phone: string;
   email: string;
   address: string;
-  rol: string;  
-}
+  rol: string;
+  projectName: string;
+};
 
-export async function postVolunteers(newVolunteer: Volunteer) {
+export const useVolunteerService = () => {
+  const client = useAuthorizedClient();
 
-  const volunteers = await fetchVolunteers();
-
-  volunteers.push(newVolunteer);
-
-  try {
-    const response = await axios.put(
-      VOLUNTEERS_API_URL,
-      { volunteers: volunteers },
-      {
-        headers: {
-          'X-Access-Key': API_KEY,
-        }
-      }
-    );
-
-    if (response.status != 200)
-      throw new Error("Error adding volunteers");
-
-    return newVolunteer;
-  } catch (error) {
-    console.error("Error adding volunteers:", error);
-  }
-
-}
-
-export function useAddVolunteers() {
-  const queryClient = useQueryClient()
-
-  // **Optimistic update**: before the request fires
-  return useMutation({
-    mutationFn: postVolunteers,
-    onMutate: async (newVolunteer) => {
-      await queryClient.cancelQueries({ queryKey: ['volunteers'] })
-      const previous = queryClient.getQueryData(['volunteers'])
-
-      queryClient.setQueryData<Volunteer[]>(['volunteers'], (old) => {
-        return [...(old || []), newVolunteer];
-      });
-
-      return { previous }
-    },
-    onError: (_err, _variables, context) => {
-      if (context?.previous) {
-        queryClient.setQueryData(['volunteers'], context.previous)
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({queryKey:['volunteers']})
+  const fetchVolunteers = async (): Promise<Volunteer[]> => {
+    try {
+      const response = await client.get('/api/volunteers');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching volunteers:', error);
+      return [];
     }
-  })
-}
+  };
+
+  const postVolunteer = async (newVolunteer: Volunteer) => {
+    try {
+      const response = await client.post('/api/volunteers', newVolunteer);
+
+      if (response.status !== 200 && response.status !== 201)
+        throw new Error("Error adding volunteer");
+
+      return response.data;
+    } catch (error) {
+      console.error("Error adding volunteer:", error);
+      throw error;
+    }
+  };
+
+  const updateVolunteer = async (updatedVolunteer: Volunteer) => {
+    try {
+      const response = await client.put(`/api/volunteers/${updatedVolunteer.id}`, updatedVolunteer);
+      if (response.status !== 200) throw new Error("Error updating volunteer");
+      return response.data;
+    } catch (error) {
+      console.error("Error updating volunteer:", error);
+      throw error;
+    }
+  };
+
+  const deleteVolunteer = async (volunteerId: number) => {
+    try {
+      const response = await client.delete(`/api/volunteers/${volunteerId}`);
+      if (response.status !== 200) throw new Error("Error deleting volunteer");
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting volunteer:", error);
+      throw error;
+    }
+  };
+
+  return { fetchVolunteers, postVolunteer, updateVolunteer, deleteVolunteer };
+};
 
 export const useVolunteers = () => {
-  return useQuery({
+  const { fetchVolunteers } = useVolunteerService();
+
+  return useQuery<Volunteer[], Error>({
     queryKey: ['volunteers'],
     queryFn: fetchVolunteers,
     staleTime: 5 * 60 * 1000,
     retry: 1,
   });
 };
+
+export function useAddVolunteers() {
+  const queryClient = useQueryClient();
+  const { postVolunteer } = useVolunteerService();
+
+  return useMutation<
+    Volunteer,
+    Error,     
+    Volunteer, 
+    { previous: Volunteer[] | undefined } 
+  >({
+    mutationFn: postVolunteer,
+    onMutate: async (newVolunteer) => {
+      await queryClient.cancelQueries({ queryKey: ['volunteers'] });
+      const previous = queryClient.getQueryData<Volunteer[]>(['volunteers']); 
+
+      queryClient.setQueryData<Volunteer[]>(['volunteers'], (old) => {
+        return [...(old || []), newVolunteer];
+      });
+
+      return { previous };
+    },
+    onError: (_err, _variables, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData<Volunteer[]>(['volunteers'], context.previous); // Specify type for setQueryData
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['volunteers'] });
+    },
+  });
+}
+
+export function useUpdateVolunteer() {
+  const queryClient = useQueryClient();
+  const { updateVolunteer } = useVolunteerService();
+
+  return useMutation<Volunteer, Error, Volunteer>({
+    mutationFn: updateVolunteer,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['volunteers'] });
+    },
+  });
+}
+
+export function useDeleteVolunteer() {
+  const queryClient = useQueryClient();
+  const { deleteVolunteer } = useVolunteerService();
+
+  return useMutation<void, Error, number>({
+    mutationFn: deleteVolunteer,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['volunteers'] });
+    },
+  });
+}

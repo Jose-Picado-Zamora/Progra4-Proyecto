@@ -14,14 +14,10 @@ using Microsoft.OpenApi.Models;
 using ProjectService.WebAPI.Data;
 using System.Text;
 
-
-
 namespace API_FundacionTamarindoPark.WebAPI
 {
     public class Startup
     {
-        
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,8 +28,6 @@ namespace API_FundacionTamarindoPark.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             // 1. jwtSettings binding
             var jwtSettings = Configuration
                                 .GetSection("JwtSettings")
@@ -41,7 +35,6 @@ namespace API_FundacionTamarindoPark.WebAPI
                                 ?? throw new InvalidOperationException("Invalid JWT Settings");
 
             // 2. Registro de DI
-
             services.AddSingleton(jwtSettings);
             // Cambia el registro del servicio
             services.AddScoped<IUserAuthService, UserAuthService>();
@@ -49,9 +42,7 @@ namespace API_FundacionTamarindoPark.WebAPI
             services.AddScoped<API_FundacionTamarindoPark.Services.IDonorService, API_FundacionTamarindoPark.Services.DonorService>();
             services.AddScoped<API_FundacionTamarindoPark.Services.IFairService, API_FundacionTamarindoPark.Services.FairService>();
             services.AddScoped<API_FundacionTamarindoPark.Services.IEntrepreneurService, API_FundacionTamarindoPark.Services.EntrepreneurService>();
-
-
-
+            services.AddScoped<API_FundacionTamarindoPark.Services.IVolunteerService, API_FundacionTamarindoPark.Services.VolunteerService>();
 
             // 3. Configurar Authenticacion
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -85,13 +76,12 @@ namespace API_FundacionTamarindoPark.WebAPI
 
             services.AddAuthorization();
 
-
             services.AddDbContext<ProjectContext>(options => options.UseInMemoryDatabase("projectdb"));
             services.AddDbContext<DonorContext>(options => options.UseInMemoryDatabase("projectdb"));
             services.AddDbContext<FairContext>(options => options.UseInMemoryDatabase("projectdb"));
             services.AddDbContext<EntrepreneurContext>(options => options.UseInMemoryDatabase("projectdb"));
+            services.AddDbContext<VolunteerContext>(options => options.UseInMemoryDatabase("projectdb"));
             services.AddControllers();
-
 
             // Add Swagger generation
             services.AddSwaggerGen(c =>
@@ -105,17 +95,12 @@ namespace API_FundacionTamarindoPark.WebAPI
             });
         }
 
-
-     
-    
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
 
                 // Enable middleware to serve generated Swagger as a JSON endpoint.
                 app.UseSwagger();

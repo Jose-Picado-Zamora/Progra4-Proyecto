@@ -1,19 +1,19 @@
-import { useForm } from '@tanstack/react-form'
-import { useAddVolunteers } from '../Services/VolunteersService'
-type AddVolunteerFormProps = { onClose: () => void; };
+import { useForm } from '@tanstack/react-form';
+import { useAddVolunteers } from '../Services/VolunteersService';
 
-const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
- 
+type AddVolunteersFormProps = {
+  onSuccess: () => void;
+};
+
+const AddVolunteersForm = ({ onSuccess }: AddVolunteersFormProps) => {
   const {
     mutate: addVolunteer,
-    isPending:
-    isAdding,
+    isPending: isAdding,
     isError,
     error,
     isSuccess,
-  } = useAddVolunteers()
+  } = useAddVolunteers();
 
-  // Initialize form state with defaultValues
   const form = useForm({
     defaultValues: {
       id: '',
@@ -24,26 +24,44 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
       rol: '',
       projectName: '',
     },
-
-    // when the user submits, adds the volunteer
-    // and reset the form
     onSubmit: async ({ value }) => {
-      addVolunteer({
-        ...value,
-        id: Number(value.id), // trasforms  string to number
-      });
-      form.reset();
-      onClose();
+      const { id, name, phone, email, address, rol, projectName } = value;
+
+      // Validation similar to AddDonorsForm
+      if (
+        !id ||
+        !name.trim() ||
+        !phone.trim() ||
+        !email.trim() ||
+        !address.trim() ||
+        !rol.trim() ||
+        !projectName.trim()
+      ) {
+        alert('Please fill in all fields before submitting.');
+        return;
+      }
+
+      addVolunteer(
+        { ...value, id: Number(value.id) },
+        {
+          onSuccess: () => {
+            setTimeout(() => {
+              form.reset();
+              onSuccess();
+            }, 1500);
+          },
+        }
+      );
     },
-  })
+  });
 
   return (
     <form
-      className="space-y-6 max-h-[80vh] overflow-y-auto p-4"
-      onSubmit={e => {
-        e.preventDefault()
-        e.stopPropagation()
-        form.handleSubmit()
+      className="space-y-6"
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        form.handleSubmit();
       }}
     >
       {/* ─── ID Field ───────────────────────── */}
@@ -52,143 +70,141 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
           ID:
         </label>
         <form.Field name="id">
-          {field => (
+          {(field) => (
             <input
               id="id"
               name="id"
               value={field.state.value}
-              onChange={e => field.handleChange(e.target.value)}
+              onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className= "border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              required
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
       </div>
+
       {/* ─── Name Field ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="name" className="mb-1 text-gray-700 font-medium">
           Name:
         </label>
         <form.Field name="name">
-          {field => (
+          {(field) => (
             <input
               id="name"
               name="name"
               value={field.state.value}
-              onChange={e => field.handleChange(e.target.value)}
+              onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
-              className="border border-gray-300 rounded px-3 py-2
-              focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              required
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           )}
         </form.Field>
       </div>
-      {/* ─── Name Field ─────────────────────── */}
+
+      {/* ─── Phone Field ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="phone" className="mb-1 text-gray-700 font-medium">
           Phone:
         </label>
         <form.Field name="phone">
-          {field => (
+          {(field) => (
             <input
               id="phone"
               name="phone"
               value={field.state.value}
-              onChange={e => field.handleChange(e.target.value)}
+              onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
               className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              required
             />
           )}
         </form.Field>
       </div>
+
       {/* ─── Email Field ────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="email" className="mb-1 text-gray-700 font-medium">
           Email:
         </label>
         <form.Field name="email">
-          {field => (
+          {(field) => (
             <input
               id="email"
               name="email"
               type="email"
               value={field.state.value}
-              onChange={e => field.handleChange(e.target.value)}
+              onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
               className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              required
             />
           )}
         </form.Field>
       </div>
+
       {/* ─── Address Field ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="address" className="mb-1 text-gray-700 font-medium">
           Address:
         </label>
         <form.Field name="address">
-          {field => (
+          {(field) => (
             <input
               id="address"
               name="address"
               value={field.state.value}
-              onChange={e => field.handleChange(e.target.value)}
+              onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
               className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              required
             />
           )}
         </form.Field>
       </div>
 
-      {/* ─── Rol Field ─────────────────────── */}
+      {/* ─── Role Field ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="rol" className="mb-1 text-gray-700 font-medium">
-          Rol:
+          Role:
         </label>
         <form.Field name="rol">
-          {field => (
+          {(field) => (
             <input
               id="rol"
               name="rol"
               value={field.state.value}
-              onChange={e => field.handleChange(e.target.value)}
+              onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
               className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              required
             />
           )}
         </form.Field>
       </div>
-      {/* ─── Project name Field ─────────────────────── */}
+
+      {/* ─── Project Name Field ─────────────────────── */}
       <div className="flex flex-col">
         <label htmlFor="projectName" className="mb-1 text-gray-700 font-medium">
-          Project name:
+          Project Name:
         </label>
         <form.Field name="projectName">
-          {field => (
+          {(field) => (
             <input
               id="projectName"
               name="projectName"
               value={field.state.value}
-              onChange={e => field.handleChange(e.target.value)}
+              onChange={(e) => field.handleChange(e.target.value)}
               onBlur={field.handleBlur}
               className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              required
             />
           )}
         </form.Field>
-      </div> 
+      </div>
+
       {/* ─── Buttons ────────────────────────── */}
       <div className="flex space-x-4">
         <button
           type="submit"
           disabled={!form.state.canSubmit}
-          className="text-white px-4 py-2 rounded focus:ring-3 focus:ring-emerald-200 disabled:opacity-50"
-          style={{ backgroundColor: '#52AC83' }}
+          className="bg-blue-600 text-white px-4 py-2 rounded focus:ring-3 focus:ring-emerald-200 disabled:opacity-50"
+          style={{ backgroundColor: '#52AC83' }} // TPF Green
         >
           Submit
         </button>
@@ -200,8 +216,17 @@ const AddVolunteerForm = ({ onClose }: AddVolunteerFormProps) => {
           Reset
         </button>
       </div>
-    </form>
-  )
-}
 
-export default AddVolunteerForm
+      {isSuccess && (
+        <div className="text-green-600 text-sm mt-2">
+          Volunteer successfully added!
+        </div>
+      )}
+      {isError && (
+        <div className="text-red-600 text-sm mt-2">Failed to add volunteer.</div>
+      )}
+    </form>
+  );
+};
+
+export default AddVolunteersForm;
