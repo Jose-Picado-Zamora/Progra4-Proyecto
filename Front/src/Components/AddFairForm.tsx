@@ -1,103 +1,103 @@
-import { useState } from "react";
+import { useForm, useField } from "@tanstack/react-form";
 import { useAddFair } from "../Services/FairsService";
+import { useState } from "react";
+import CenterAlert from "./CenterAlert";
 
-type Props = {
+type AddFairFormProps = {
   onSuccess: () => void;
 };
 
-const AddFairForm = ({ onSuccess }: Props) => {
-  const { mutate: addFair, isPending } = useAddFair();
+const AddFairForm = ({ onSuccess }: AddFairFormProps) => {
+  const { mutate: addFair } = useAddFair();
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const initialForm = {
-    name: "",
-    date: "",
-    location: "",
-    type: "",
-    objective: "",
-    organizer: "",
-    details: "",
-    audience: "",
-    stands: 0, 
-  };
+  const form = useForm({
+    defaultValues: {
+      name: "",
+      description: "",
+      location: "",
+      date: "",
+    },
+    onSubmit: async ({ value }) => {
+      const { name, description, location, date } = value;
 
-  const [form, setForm] = useState(initialForm);
+      if (!name.trim() || !description.trim() || !location.trim() || !date.trim()) {
+        setErrorMessage("Please complete all fields before submitting.");
+        return;
+      }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
+      form.reset(); 
 
-    setForm({
-      ...form,
-      [name]: name === "stands" ? Math.max(0, Number(value)) : value, 
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    
-    if (!form.stands || form.stands <= 0) {
-      alert("La cantidad de stands debe ser mayor a 0.");
-      return;
-    }
-
-    addFair(form, { onSuccess });
-  };
-
-  const handleReset = () => {
-    setForm(initialForm);
-  };
+      addFair(value, {
+        onSuccess: () => {
+          onSuccess();
+        },
+      });
+    },
+    touchOnBlur: true,
+    touchOnChange: true,
+  });
 
   return (
     <form
-      onSubmit={handleSubmit}
-      className="space-y-6 max-h-[80vh] overflow-y-auto p-4"
+      className="space-y-6"
+      onSubmit={(e) => {
+        e.preventDefault();
+        form.handleSubmit();
+      }}
     >
-      {Object.entries(form).map(([key, value]) => (
-        <div className="flex flex-col" key={key}>
-          <label
-            htmlFor={key}
-            className="mb-1 text-gray-700 font-medium capitalize"
-          >
-            {key.charAt(0).toUpperCase() + key.slice(1)}:
-          </label>
+      {errorMessage && (
+        <CenterAlert
+          message={errorMessage}
+          onClose={() => setErrorMessage("")}
+        />
+      )}
 
-          {key === "details" ? (
-            <textarea
-              id={key}
-              name={key}
-              value={value}
-              onChange={handleChange}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              required
-            />
-          ) : (
+      {["name", "description", "location", "date"].map((fieldName) => {
+        const field = useField({
+          form,
+          name: fieldName,
+          validators: {
+            onChange: (value) =>
+              typeof value === "string" && value.trim() === ""
+                ? "Required"
+                : undefined,
+          },
+        });
+
+        return (
+          <div className="flex flex-col" key={fieldName}>
+            <label htmlFor={fieldName} className="mb-1 text-gray-700 font-medium">
+              {fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}:
+            </label>
             <input
-              type={key === "date" ? "date" : key === "stands" ? "number" : "text"}
-              id={key}
-              name={key}
-              value={value}
-              min={key === "stands" ? 1 : undefined} 
-              onChange={handleChange}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              required
+              type={fieldName === "date" ? "date" : "text"}
+              id={fieldName}
+              name={fieldName}
+              value={field.state.value}
+              onChange={(e) => field.handleChange(e.target.value)}
+              onBlur={field.handleBlur}
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 appearance-none"
             />
-          )}
-        </div>
-      ))}
+            {field.state.meta.touchedErrors?.[0] && (
+              <span className="text-red-500 text-sm mt-1">
+                {field.state.meta.touchedErrors[0]}
+              </span>
+            )}
+          </div>
+        );
+      })}
 
       <div className="flex space-x-4">
         <button
           type="submit"
-          className="text-white px-4 py-2 rounded focus:ring-3 focus:ring-emerald-200 
-                      hover:bg-opacity-90 disabled:opacity-50"
-          style={{ backgroundColor: "#52AC83" }}
-          disabled={isPending}
+          className="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700"
         >
-          {isPending ? "Saving..." : "Add Fair"}
+          Submit
         </button>
         <button
           type="button"
-          onClick={handleReset}
+          onClick={() => form.reset()}
           className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300"
         >
           Reset
