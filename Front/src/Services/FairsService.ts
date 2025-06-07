@@ -1,72 +1,96 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from 'axios';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useAuth } from '../Context/AuthContext';
 
-export type Fair = {
-  id?: number;
-  name: string;
-  date: string;
-  location: string;
-  type: string;
-  objective: string;
-  organizer: string;
-  details: string;
-  audience: string;
-  stands: number;
+const useAuthorizedClient = () => {
+  const { token } = useAuth();
+
+  const authorizedClient = axios.create({
+    baseURL: 'https://localhost:7210',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+
+  return authorizedClient;
 };
 
-const BIN_ID = "682547508561e97a50141ff4";
-const API_KEY = "$2a$10$3GDIRQCyqLcMLR8sfDsjoO6JZHs155sD6QhZAOQAiZX1oxTGFY9OO";
-const BASE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+export type Fair = {
+  id: number;
+  name: string;
+  description: string;
+  location: string;
+  date: string;
+};
 
-// GET 
+export const useFairService = () => {
+  const client = useAuthorizedClient();
+
+  const fetchFairs = async (): Promise<Fair[]> => {
+    const response = await client.get('/api/fairs');
+    return response.data;
+  };
+
+  const postFair = async (newFair: Fair) => {
+    const response = await client.post('/api/fairs', newFair);
+    if (response.status !== 200 && response.status !== 201) {
+      throw new Error("Error adding fair");
+    }
+    return response.data;
+  };
+
+  const updateFair = async (updatedFair: Fair) => {
+    const response = await client.put(`/api/fairs/${updatedFair.id}`, updatedFair);
+    return response.data;
+  };
+
+  return { fetchFairs, postFair, updateFair };
+};
+
 export const useFairs = () => {
-  return useQuery<Fair[]>({
-    queryKey: ["fairs"],
-    queryFn: async () => {
-      const res = await fetch(BASE_URL, {
-        headers: {
-          "X-Master-Key": API_KEY
-        }
-      });
-      if (!res.ok) throw new Error("Failed to load fairs");
-      const json = await res.json();
-      return json.record ?? [];
+  const { fetchFairs } = useFairService();
+  return useQuery({
+    queryKey: ['fairs'],
+    queryFn: fetchFairs,
+    staleTime: 5 * 60 * 1000,
+    retry: 1,
+  });
+};
+
+export const useAddFair = () => {
+  const queryClient = useQueryClient();
+  const { postFair } = useFairService();
+
+  return useMutation({
+    mutationFn: postFair,
+    onMutate: async (newFair) => {
+      await queryClient.cancelQueries({ queryKey: ['fairs'] });
+      const previous = queryClient.getQueryData(['fairs']);
+
+      queryClient.setQueryData<Fair[]>(['fairs'], (old) => [...(old || []), newFair]);
+
+      return { previous };
+    },
+    onError: (_err, _variables, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(['fairs'], context.previous);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['fairs'] });
     },
   });
 };
 
-// PUT 
-export const useAddFair = () => {
+export const useUpdateFair = () => {
   const queryClient = useQueryClient();
+  const { updateFair } = useFairService();
 
   return useMutation({
-    mutationFn: async (newFair: Fair) => {
-
-      const res = await fetch(BASE_URL, {
-        headers: { "X-Master-Key": API_KEY }
-      });
-      const json = await res.json();
-      const current = json.record ?? [];
-
-      const nextId = current.length > 0
-        ? Math.max(...current.map((f: Fair) => f.id ?? 0)) + 1
-        : 1;
-
-      const updated = [...current, { id: nextId, ...newFair }];
-
-      const putRes = await fetch(BASE_URL, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Master-Key": API_KEY
-        },
-        body: JSON.stringify(updated),
-      });
-
-      if (!putRes.ok) throw new Error("Failed to update fair list");
-      return putRes.json();
-    },
+    mutationFn: updateFair,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["fairs"] });
+      queryClient.invalidateQueries({ queryKey: ['fairs'] });
     },
   });
 };
