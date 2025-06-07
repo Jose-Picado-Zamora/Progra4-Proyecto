@@ -9,6 +9,7 @@ namespace API_FundacionTamarindoPark.Services
     {
         Task<IEnumerable<Donor>> Get(int[] ids);
         Task<Donor> Add(Donor donor);
+        Task<Donor> Update(Donor donor);
     }
 
     public class DonorService : IDonorService
@@ -33,6 +34,20 @@ namespace API_FundacionTamarindoPark.Services
         public async Task<API_FundacionTamarindoPark.DTO.Donor> Add(Donor donor)
         {
             await _donorContext.Donors.AddAsync(donor);
+            await _donorContext.SaveChangesAsync();
+            return donor;
+        }
+
+        public async Task<Donor> Update(Donor donor)
+        {
+            var donorsForChanges = await _donorContext.Donors.SingleAsync(x => x.Id == donor.Id);
+            donorsForChanges.Name = donor.Name;
+            donorsForChanges.Email = donor.Email;
+            donorsForChanges.Phone = donor.Phone;
+            donorsForChanges.DonationType = donor.DonationType;
+            donorsForChanges.Details = donor.Details;
+
+            _donorContext.Donors.Update(donorsForChanges);
             await _donorContext.SaveChangesAsync();
             return donor;
         }

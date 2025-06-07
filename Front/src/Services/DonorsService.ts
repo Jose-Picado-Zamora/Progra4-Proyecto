@@ -16,7 +16,7 @@ const useAuthorizedClient = () => {
   return authorizedClient;
 };
 
-type Donor = {
+export type Donor = {
   id: number;
   name: string;
   email: string;
@@ -52,7 +52,18 @@ export const useDonorService = () => {
     }
   };
 
-  return { fetchDonors, postDonor };
+  const updateDonor = async (updatedDonor: Donor) => {
+    try {
+      const response = await client.put(`/api/donors/${updatedDonor.id}`, updatedDonor);
+      if (response.status !== 200) throw new Error("Error updating donor");
+      return response.data;
+    } catch (error) {
+      console.error("Error updating donor:", error);
+      throw error;
+    }
+  };
+
+  return { fetchDonors, postDonor, updateDonor };
 };
 
 export const useDonors = () => {
@@ -76,7 +87,7 @@ export function useAddDonor() {
       await queryClient.cancelQueries({ queryKey: ['donors'] });
       const previous = queryClient.getQueryData(['donors']);
 
-     queryClient.setQueryData<Donor[]>(['donors'], (old) => {
+      queryClient.setQueryData<Donor[]>(['donors'], (old) => {
         return [...(old || []), newDonor];
       });
 
@@ -88,6 +99,18 @@ export function useAddDonor() {
       }
     },
     onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['donors'] });
+    },
+  });
+}
+
+export function useUpdateDonor() {
+  const queryClient = useQueryClient();
+  const { updateDonor } = useDonorService();
+
+  return useMutation({
+    mutationFn: updateDonor,
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['donors'] });
     },
   });
