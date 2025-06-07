@@ -1,6 +1,7 @@
 import { getCoreRowModel, useReactTable, flexRender, ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useEntrepreneurs } from "../Services/EntrepreneursService";
+import EditEntrepreneurButton from "./EditEntrepreneurButton";
 
 const EntrepreneursList = () =>{
     const { data, isLoading, isError, error } = useEntrepreneurs();
@@ -29,6 +30,12 @@ const EntrepreneursList = () =>{
     { header: 'Feria Name', accessorKey: 'feriaName' },
     { header: 'Stand Number', accessorKey: 'standNumber' },
     { header: 'Products Description', accessorKey: 'productsDescription' },
+
+    {
+      header: 'Actions',
+      cell: ({ row }) => <EditEntrepreneurButton entrepreneur={row.original} />
+    }
+
   ], []);
 
    const table = useReactTable<Entrepreneur>({
