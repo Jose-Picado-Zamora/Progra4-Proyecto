@@ -17,7 +17,7 @@ const useAuthorizedClient = () => {
   return authorizedClient;
 };
 
-type Project = {
+export type Project = {
 
   id: number;
   name: string;
@@ -54,7 +54,18 @@ export const useProjectService = () => {
     }
   };
 
-  return { fetchProjects, postProjects };
+   const updateProject = async (updateProject: Project) => {
+      try {
+        const response = await client.put(`/api/projects/${updateProject.id}`, updateProject);
+        if (response.status !== 200) throw new Error("Error updating project");
+        return response.data;
+      } catch (error) {
+        console.error("Error updating projects:", error);
+        throw error;
+      }
+    };
+
+  return { fetchProjects, postProjects, updateProject };
 };
 
 
@@ -91,6 +102,18 @@ export function useAddProject() {
       }
     },
     onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+    },
+  });
+}
+
+export function useUpdateProject() {
+  const queryClient = useQueryClient();
+  const { updateProject } = useProjectService();
+
+  return useMutation({
+    mutationFn: updateProject,
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
     },
   });
